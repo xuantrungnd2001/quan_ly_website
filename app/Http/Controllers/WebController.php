@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWebRequest;
 use App\Http\Requests\UpdateWebRequest;
 use App\Models\Web;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class WebController extends Controller
 {
@@ -179,6 +180,12 @@ class WebController extends Controller
         if ($data['status'] !== $web->status) {
             $web->update($data);
         }
+        $text = "Test huhu\n";
+        Telegram::sendMessage([
+            'chat_id' => env('TELEGRAM_CHANNEL_ID', '1714366965'),
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ]);
         return redirect()->route('web.show', ['web' => $web->title]);
     }
     /**
@@ -198,5 +205,12 @@ class WebController extends Controller
         //
         Web::where('title', $web)->delete();
         return redirect()->route('web.index');
+    }
+    public function recheckTimes()
+    {
+        $webs = Web::get();
+        foreach ($webs as $web) {
+            $this->recheck($web);
+        }
     }
 }

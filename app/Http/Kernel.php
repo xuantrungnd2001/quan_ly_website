@@ -66,10 +66,4 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
-    protected function schedule(Schedule $schedule)
-    {
-        $schedule->call(function () {
-            exec('ping localhost -c 5');
-        })->everyMinute();
-    }
 }

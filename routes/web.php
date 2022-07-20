@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Tele;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebController;
 use App\Http\Middleware\Auth;
 use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,7 @@ Route::group(['middleware' => CheckLogin::class], function () {
     Route::get('/web/delete/{web}', [WebController::class, 'destroy'])->name('web.delete');
     Route::get('/web/delete_title/{web}', [WebController::class, 'destroy_title'])->name('web.delete_title');
     Route::get('/web/recheck/{web}', [WebController::class, 'recheck'])->name('web.recheck');
+    Route::get('/web/recheckTimes', [WebController::class, 'recheckTimes'])->name('web.recheck');
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
