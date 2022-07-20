@@ -8,6 +8,11 @@ use App\Models\Web;
 
 class WebController extends Controller
 {
+    protected $TeleController;
+    public function __construct(TeleController $TeleController)
+    {
+        $this->TeleController = $TeleController;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -52,13 +57,9 @@ class WebController extends Controller
             $ch = curl_init($data['url']);
             curl_exec($ch);
             if (!curl_errno($ch)) {
-                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                if ($http_code >= 400) {
-                    $data['status'] = 'die';
-                } else {
-                    $data['status'] = 'alive';
-                }
-            } else {
+                $data['status'] = 'alive';
+            }
+            else {
                 $data['status'] = 'die';
             }
             Web::create($data);
@@ -77,13 +78,9 @@ class WebController extends Controller
                     $ch = curl_init($data['url']);
                     curl_exec($ch);
                     if (!curl_errno($ch)) {
-                        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                        if ($http_code >= 400) {
-                            $data['status'] = 'die';
-                        } else {
-                            $data['status'] = 'alive';
-                        }
-                    } else {
+                        $data['status'] = 'alive';
+                    }
+                    else {
                         $data['status'] = 'die';
                     }
                     Web::create($data);
@@ -146,13 +143,9 @@ class WebController extends Controller
                 $ch = curl_init($data['url']);
                 curl_exec($ch);
                 if (!curl_errno($ch)) {
-                    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                    if ($http_code >= 400) {
-                        $data['status'] = 'die';
-                    } else {
-                        $data['status'] = 'alive';
-                    }
-                } else {
+                    $data['status'] = 'alive';
+                }
+                else {
                     $data['status'] = 'die';
                 }
                 $web->update($data);
@@ -167,16 +160,15 @@ class WebController extends Controller
         $ch = curl_init($url);
         curl_exec($ch);
         if (!curl_errno($ch)) {
-            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            if ($http_code >= 400) {
-                $data['status'] = 'die';
-            } else {
-                $data['status'] = 'alive';
-            }
-        } else {
+            $data['status'] = 'alive';
+        }
+        else {
             $data['status'] = 'die';
         }
-        if ($data['status'] !== $web->status) {
+        if ($data['status'] !== $web->status ) {
+            if ($data['status'] === 'die') {
+                $this -> TeleController -> updatedActivity($url);
+            }
             $web->update($data);
         }
         return redirect()->route('web.show', ['web' => $web->title]);
@@ -199,4 +191,12 @@ class WebController extends Controller
         Web::where('title', $web)->delete();
         return redirect()->route('web.index');
     }
+    public function recheckTimes()
+    {
+        $webs = Web::all();
+        foreach ($webs as $web) {
+            $this->recheck($web);
+        }
+    }
+
 }

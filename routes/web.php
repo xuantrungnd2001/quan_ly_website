@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\TeleController;
 use App\Http\Middleware\Auth;
 use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
