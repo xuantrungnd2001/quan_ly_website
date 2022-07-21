@@ -53,7 +53,7 @@ class WebController extends Controller
             $data['url'] = $url;
             $ch = curl_init($data['url']);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             curl_exec($ch);
             if (!curl_errno($ch)) {
                 $data['status'] = 'alive';
@@ -70,7 +70,6 @@ class WebController extends Controller
                 ]);
             }
         }
-
         if ($request['file']) {
             $urls = fopen($request['file'], 'r');
             while (!feof($urls)) {
@@ -84,7 +83,7 @@ class WebController extends Controller
                     $data['last_check'] = date('Y-m-d H:i:s');
                     $ch = curl_init($data['url']);
                     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-                    curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                     curl_exec($ch);
                     if (!curl_errno($ch)) {
                         $data['status'] = 'alive';
@@ -151,7 +150,7 @@ class WebController extends Controller
             if ($data['url'] !== $web->url) {
                 $ch = curl_init($data['url']);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                 curl_exec($ch);
                 if (!curl_errno($ch)) {
                     $data['status'] = 'alive';
@@ -169,7 +168,7 @@ class WebController extends Controller
         $url = $web->url;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_exec($ch);
         if (!curl_errno($ch)) {
             $data['status'] = 'alive';
