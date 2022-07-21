@@ -168,7 +168,7 @@ class WebController extends Controller
         $url = $web->url;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 90);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_exec($ch);
         if (!curl_errno($ch)) {
             $data['status'] = 'alive';
