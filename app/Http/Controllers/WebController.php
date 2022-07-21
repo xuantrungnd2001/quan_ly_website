@@ -62,7 +62,7 @@ class WebController extends Controller
             }
             $data['last_check'] = date('Y-m-d H:i:s');
             if (Web::create($data)) {
-                $text = 'User ' . session('user')->account . ' created new url ' . $data['url'] . ' at ' . date('Y-m-d H:i:s');
+                $text = 'User ' .'<b>' . session('user')->account . '</b>' . ' created new url ' . $data['url'] . ' at ' . date('Y-m-d H:i:s');
                 Telegram::sendMessage([
                     'chat_id' => env('TELEGRAM_CHANNEL_ID', '-796261100'),
                     'parse_mode' => 'HTML',
@@ -92,7 +92,7 @@ class WebController extends Controller
                         $data['status'] = 'die';
                     }
                     if (Web::create($data)) {
-                        $text = 'User ' . session('user')->account . ' created new url ' . $data['url'] . ' at ' . date('Y-m-d H:i:s');
+                        $text = 'User ' . '<b>' . session('user')->account . '</b>' . ' created new url ' . $data['url'] . ' at ' . date('Y-m-d H:i:s');
                         Telegram::sendMessage([
                             'chat_id' => env('TELEGRAM_CHANNEL_ID', '-796261100'),
                             'parse_mode' => 'HTML',
@@ -169,7 +169,7 @@ class WebController extends Controller
         $url = $web->url;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 90);
         curl_exec($ch);
         if (!curl_errno($ch)) {
             $data['status'] = 'alive';
@@ -179,7 +179,7 @@ class WebController extends Controller
         $data['last_check'] = date('Y-m-d H:i:s');
         if ($data['status'] !== $web->status) {
             if ($data['status'] === 'die') {
-                $text = '<b>' . date('H:i') . '</b>\n'
+                $text = '<b>' . date('H:i') . '</b>'
                     . ' domain: ' . $url . ' died.';
                 Telegram::sendMessage([
                     'chat_id' => env('TELEGRAM_CHANNEL_ID', '-796261100'),

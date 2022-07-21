@@ -34,7 +34,7 @@ return [
     'bots'                         => [
         'mybot' => [
             'username'            => 'trungdx1bot',
-            'token'               => env('TELEGRAM_BOT_TOKEN', '5514293475:AAGGVWu_c7zO2CQ0FkZ4ipyk323cHju44gw'),
+            'token'               => env('TELEGRAM_BOT_TOKEN', '5514293475:AAHTsOHP3wo5_HA6atGNUAaAp-AOs0dweRI'),
             'certificate_path'    => env('TELEGRAM_CERTIFICATE_PATH', ''),
             'webhook_url'         => env('TELEGRAM_WEBHOOK_URL', ''),
             'commands'            => [
