@@ -21,7 +21,7 @@
                                     <th>URL</th>
                                     <th>Status</th>
                                     <th>Create time</th>
-                                    <th>Last Update</th>
+                                    <th>Last Check</th>
                                     <th>ReCheck</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -42,7 +42,7 @@
                                         </td>
                                         @endif
                                         <td>{{$url->created_at}}</td>
-                                        <td>{{$url->updated_at}}</td>
+                                        <td>{{$url->last_check}}</td>
                                         <td><a href="{{route('web.recheck',$url)}}" class="action-icon"> <i class="dripicons-clockwise"></i></a></td>
                                         <td><a href="{{route('web.edit',$url)}}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a></td>
                                         <td><a href="{{route('web.delete',$url)}}" class="action-icon"> <i class="mdi mdi-delete"></i></a></td>

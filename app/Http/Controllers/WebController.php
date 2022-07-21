@@ -9,6 +9,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class WebController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -51,18 +52,23 @@ class WebController extends Controller
             }
             $data['url'] = $url;
             $ch = curl_init($data['url']);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 4);
             curl_exec($ch);
             if (!curl_errno($ch)) {
-                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                if ($http_code >= 400) {
-                    $data['status'] = 'die';
-                } else {
-                    $data['status'] = 'alive';
-                }
+                $data['status'] = 'alive';
             } else {
                 $data['status'] = 'die';
             }
-            Web::create($data);
+            $data['last_check'] = date('Y-m-d H:i:s');
+            if (Web::create($data)) {
+                $text = 'User ' . session('user')->account . ' created new url ' . $data['url'] . ' at ' . date('Y-m-d H:i:s');
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', '-796261100'),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+            }
         }
 
         if ($request['file']) {
@@ -75,19 +81,24 @@ class WebController extends Controller
                         $url = 'http://' . $url;
                     }
                     $data['url'] = $url;
+                    $data['last_check'] = date('Y-m-d H:i:s');
                     $ch = curl_init($data['url']);
+                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 4);
                     curl_exec($ch);
                     if (!curl_errno($ch)) {
-                        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                        if ($http_code >= 400) {
-                            $data['status'] = 'die';
-                        } else {
-                            $data['status'] = 'alive';
-                        }
+                        $data['status'] = 'alive';
                     } else {
                         $data['status'] = 'die';
                     }
-                    Web::create($data);
+                    if (Web::create($data)) {
+                        $text = 'User ' . session('user')->account . ' created new url ' . $data['url'] . ' at ' . date('Y-m-d H:i:s');
+                        Telegram::sendMessage([
+                            'chat_id' => env('TELEGRAM_CHANNEL_ID', '-796261100'),
+                            'parse_mode' => 'HTML',
+                            'text' => $text
+                        ]);
+                    }
                 }
             }
 
@@ -107,13 +118,7 @@ class WebController extends Controller
         $data = Web::where('title', $web)->get();
         return view('web.show', ['data' => $data]);
     }
-    // public function status($web)
-    // {
 
-    //     $data = Web::where('title', $web)->get();
-
-    //     return view('web.show', ['data' => $data]);
-    // }
     /**
      * Show the form for editing the specified resource.
      *
@@ -145,14 +150,11 @@ class WebController extends Controller
             $data['url'] = $url;
             if ($data['url'] !== $web->url) {
                 $ch = curl_init($data['url']);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 4);
                 curl_exec($ch);
                 if (!curl_errno($ch)) {
-                    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                    if ($http_code >= 400) {
-                        $data['status'] = 'die';
-                    } else {
-                        $data['status'] = 'alive';
-                    }
+                    $data['status'] = 'alive';
                 } else {
                     $data['status'] = 'die';
                 }
@@ -166,26 +168,27 @@ class WebController extends Controller
     {
         $url = $web->url;
         $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 4);
         curl_exec($ch);
         if (!curl_errno($ch)) {
-            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            if ($http_code >= 400) {
-                $data['status'] = 'die';
-            } else {
-                $data['status'] = 'alive';
-            }
+            $data['status'] = 'alive';
         } else {
             $data['status'] = 'die';
         }
+        $data['last_check'] = date('Y-m-d H:i:s');
         if ($data['status'] !== $web->status) {
-            $web->update($data);
+            if ($data['status'] === 'die') {
+                $text = '<b>' . date('H:i') . '</b>\n'
+                    . ' domain: ' . $url . ' died.';
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', '-796261100'),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+            }
         }
-        $text = "Test huhu\n";
-        Telegram::sendMessage([
-            'chat_id' => env('TELEGRAM_CHANNEL_ID', '1714366965'),
-            'parse_mode' => 'HTML',
-            'text' => $text
-        ]);
+        $web->update($data);
         return redirect()->route('web.show', ['web' => $web->title]);
     }
     /**

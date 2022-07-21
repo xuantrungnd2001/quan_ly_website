@@ -20,6 +20,7 @@ class CreateWebsTable extends Migration
             $table->string('status');
             $table->string('owner');
             $table->timestamps();
+            $table->timestamp('last_check');
         });
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Web extends Model
 {
     protected $fillable = [
-        'id', 'url', 'status', 'title', 'owner',  'created_at', 'updated_at'
+        'id', 'url', 'status', 'title', 'owner',  'created_at', 'updated_at', 'last_check'
     ];
     use HasFactory;
 }
