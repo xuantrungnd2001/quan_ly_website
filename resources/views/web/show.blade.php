@@ -20,6 +20,7 @@
                                 <tr> 
                                     <th>URL</th>
                                     <th>Status</th>
+                                    <th>Http Code</th>
                                     <th>Create time</th>
                                     <th>Last Check</th>
                                     <th>ReCheck</th>
@@ -41,6 +42,7 @@
                                             <h5><span class="badge badge-danger-lighten">Die</span></h5>
                                         </td>
                                         @endif
+                                        <td>{{$url->http_code}}</td>
                                         <td>{{$url->created_at}}</td>
                                         <td>{{$url->last_check}}</td>
                                         <td><a href="{{route('web.recheck',$url)}}" class="action-icon"> <i class="dripicons-clockwise"></i></a></td>

@@ -47,7 +47,7 @@ class WebController extends Controller
         $data['owner'] = session('user')->account;
         if (!empty($data['url'])) {
             $url = $data['url'];
-            if (strpos($url, 'http://') === false && strpos($url, 'https://') === false) {
+            if (str_starts_with($url, 'http://') === false && str_starts_with($url, 'https://') === false) {
                 $url = 'http://' . $url;
             }
             $data['url'] = $url;
@@ -55,6 +55,8 @@ class WebController extends Controller
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
             curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $data['http_code'] = $http_code;
             if (!curl_errno($ch)) {
                 $data['status'] = 'alive';
             } else {
@@ -76,7 +78,7 @@ class WebController extends Controller
                 $url = fgets($urls);
                 $url = trim($url);
                 if (!empty($url)) {
-                    if (strpos($url, 'http://') === false && strpos($url, 'https://') === false && $url !== "\n") {
+                    if (str_starts_with($url, 'http://') === false && str_starts_with($url, 'https://') === false && $url !== "\n") {
                         $url = 'http://' . $url;
                     }
                     $data['url'] = $url;
@@ -85,6 +87,8 @@ class WebController extends Controller
                     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
                     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                     curl_exec($ch);
+                    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                    $data['http_code'] = $http_code;
                     if (!curl_errno($ch)) {
                         $data['status'] = 'alive';
                     } else {
@@ -143,7 +147,7 @@ class WebController extends Controller
         $data = $request->validated();
         if (!empty($data['url'])) {
             $url = $data['url'];
-            if (strpos($url, 'http://') === false && strpos($url, 'https://') === false) {
+            if (str_starts_with($url, 'http://') === false && str_starts_with($url, 'https://') === false) {
                 $url = 'http://' . $url;
             }
             $data['url'] = $url;
@@ -152,6 +156,8 @@ class WebController extends Controller
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
                 curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                $data['http_code'] = $http_code;
                 if (!curl_errno($ch)) {
                     $data['status'] = 'alive';
                 } else {
@@ -170,6 +176,8 @@ class WebController extends Controller
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $data['http_code'] = $http_code;
         if (!curl_errno($ch)) {
             $data['status'] = 'alive';
         } else {

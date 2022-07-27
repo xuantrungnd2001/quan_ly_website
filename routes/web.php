@@ -25,9 +25,9 @@ Route::group(['middleware' => CheckLogin::class], function () {
     Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('user/edit/{user}', [UserController::class, 'update'])->name('user.update');
     Route::get('/user/delete/{user}', [UserController::class, 'destroy'])->name('user.delete');
-
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/user/create', [UserController::class, 'store'])->name('user.store');
+
     Route::get('/web', [WebController::class, 'index'])->name('web.index');
     Route::get('/web/create', [WebController::class, 'create'])->name('web.create');
     Route::post('/web/create', [WebController::class, 'store'])->name('web.store');

@@ -18,6 +18,7 @@ class CreateWebsTable extends Migration
             $table->string('url');
             $table->string('title');
             $table->string('status');
+            $table->string('http_code');
             $table->string('owner');
             $table->timestamps();
             $table->timestamp('last_check');
