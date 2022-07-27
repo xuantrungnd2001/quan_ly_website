@@ -1,12 +1,12 @@
 <?php return array(
     'root' => array(
+        'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
+        'reference' => 'd9ba88dc9c50de1a3c39d93dc4519443d0c24d92',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1fb499d22bea0c7f51c52c82f4d591cad3aa0206',
-        'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
@@ -382,10 +382,10 @@
         'irazasyed/telegram-bot-sdk' => array(
             'pretty_version' => 'v3.8',
             'version' => '3.8.0.0',
+            'reference' => 'b8b73c9b6cca0aa7778ea8a49c18e33f3cb5f59b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../irazasyed/telegram-bot-sdk',
             'aliases' => array(),
-            'reference' => 'b8b73c9b6cca0aa7778ea8a49c18e33f3cb5f59b',
             'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(
@@ -406,10 +406,10 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+            'reference' => 'd9ba88dc9c50de1a3c39d93dc4519443d0c24d92',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1fb499d22bea0c7f51c52c82f4d591cad3aa0206',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -475,15 +475,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'league/event' => array(
-            'pretty_version' => '2.2.0',
-            'version' => '2.2.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../league/event',
-            'aliases' => array(),
-            'reference' => 'd2cc124cf9a3fab2bb4ff963307f60361ce4d119',
-            'dev_requirement' => false,
-        ),
         'league/flysystem' => array(
             'pretty_version' => '1.1.9',
             'version' => '1.1.9.0',
@@ -505,10 +496,10 @@
         'longman/telegram-bot' => array(
             'pretty_version' => '0.78.0',
             'version' => '0.78.0.0',
+            'reference' => 'f3fe5ed3b62995ac6ee282cbdd670634329961f7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../longman/telegram-bot',
             'aliases' => array(),
-            'reference' => 'f3fe5ed3b62995ac6ee282cbdd670634329961f7',
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(

@@ -15,7 +15,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+<<<<<<< HEAD
+        $schedule->call('App\Http\Controllers\WebController@recheckTimes')->everyfiveminutes();
+=======
         $schedule->call('App\Http\Controllers\WebController@recheckTimes')->everyFiveMinutes();
+>>>>>>> bf5ee46789460d9f90a70cb6b4e61a7161e88a96
     }
 
     /**
