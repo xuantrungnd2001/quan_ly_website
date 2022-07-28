@@ -26,7 +26,7 @@ class StoreWebRequest extends FormRequest
         return [
             //
             'title' => 'required|min:3|max:255',
-            'url' => [],
+            'url' => ['unique:webs'],
             'file' => ['mimes:txt', 'file'],
         ];
     }

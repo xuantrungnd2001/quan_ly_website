@@ -12,8 +12,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                   
-
+                    <div class="col-sm-4">
+                        <a href="{{route('web.addurl',$data[0]->title)}}" class="btn btn-success mb-2"><i
+                                class="mdi mdi-plus-circle mr-2"></i> Thêm URL</a>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-centered mb-0">
                             <thead class="thead-light">

@@ -27,10 +27,11 @@ Route::group(['middleware' => CheckLogin::class], function () {
     Route::get('/user/delete/{user}', [UserController::class, 'destroy'])->name('user.delete');
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/user/create', [UserController::class, 'store'])->name('user.store');
-
     Route::get('/web', [WebController::class, 'index'])->name('web.index');
     Route::get('/web/create', [WebController::class, 'create'])->name('web.create');
     Route::post('/web/create', [WebController::class, 'store'])->name('web.store');
+    Route::get('/web/addurl/{title}', [WebController::class, 'addurl'])->name('web.addurl');
+    Route::post('/web/addurl/{title}', [WebController::class, 'storeurl'])->name('web.storeurl');
     Route::get('/web/show/{web}', [WebController::class, 'show'])->name('web.show');
     Route::get('/web/edit/{web}', [WebController::class, 'edit'])->name('web.edit');
     Route::put('/web/edit/{web}', [WebController::class, 'update'])->name('web.update');
